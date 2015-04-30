@@ -41,6 +41,7 @@ if File.exists?('/usr/sbin/lldptool')
     # LLDP Name    Numeric value
     'chassisID'    => '1',
     'portID'       => '2',
+    'portDesc'     => '4',
     'sysName'      => '5',
     'mngAddr_ipv4' => '8',
     'mngAddr_ipv6' => '8',
@@ -58,7 +59,7 @@ if File.exists?('/usr/sbin/lldptool')
           output = Facter::Util::Resolution.exec("lldptool get-tlv -n -i #{interface} -V #{value} 2>/dev/null")
           if not output.nil?
             case key
-            when 'sysName', 'MTU'
+            when 'portDesc', 'sysName', 'MTU'
               output.split("\n").each do |line|
                 result = $1 if line.match(/^\s+(.*)/)
               end
