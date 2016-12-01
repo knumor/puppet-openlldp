@@ -48,7 +48,7 @@ if File.exists?('/usr/sbin/lldptool')
   }
 
   # Remove interfaces that pollute the list (like lo and bond0).
-  Facter.value('interfaces').split(/,/).grep_v(/^lo$|^bond[0-9]|^docker[0-9]|^veth[0-9a-f]/).each do |interface|
+  Facter.value('interfaces').split(/,/).grep_v(/^lo$|^bond[0-9]|^docker[0-9]|^veth[0-9a-f]|\.[0-9]+$/).each do |interface|
     # Loop through the list of LLDP TLVs that we want to present as facts.
     lldp.each_pair do |key, value|
       Facter.add("lldp_neighbor_#{key}_#{interface}") do
